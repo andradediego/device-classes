@@ -9,6 +9,15 @@
 .mt-10 {
 	margin-top: 10px;
 }
+
+.mb-10 {
+	margin-bottom: 10px;
+}
+
+.my-10 {
+	margin: 10px 0px;
+}
+
 .pa-5{
 	padding: 5px;
 }
@@ -18,11 +27,19 @@
 }
 
 .min-height-panel {
-	min-height: 300px;
+	min-height: 200px;
 }
 
 .border-standart {
 	border: 3px solid #337ab7;
 	border-radius: 10px;	
 	padding: 15px;;
+}
+
+ul.data-display {
+	padding: 0;
+}
+
+ul.data-display li {
+	list-style: none;	
 }
