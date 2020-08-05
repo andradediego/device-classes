@@ -1,0 +1,28 @@
+.standar-button-size {
+	width: 100px;
+}
+
+.ma-10{
+	margin: 10px;
+}
+
+.mt-10 {
+	margin-top: 10px;
+}
+.pa-5{
+	padding: 5px;
+}
+
+.hide-element {
+	display: none;
+}
+
+.min-height-panel {
+	min-height: 300px;
+}
+
+.border-standart {
+	border: 3px solid #337ab7;
+	border-radius: 10px;	
+	padding: 15px;;
+}
