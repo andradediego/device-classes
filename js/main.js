@@ -23,9 +23,12 @@ $(function() {
 		$('#row-objects, #btn-create').addClass('hide-element');
 		displayFields($(this));
 
+		let index;
+		let item;
+
 		if ($(this).hasClass('video-device')) {
-			let index = parseInt($('#data-video-device').attr('data-index'));
-			let item = videoDevices[index];
+			index = parseInt($('#data-video-device').attr('data-index'));
+			item = videoDevices[index];
 
 			$('#ip-replacement-cost').val(item.replacementCost);
 			$('#ip-supplier-name').val(item.supplierName);
@@ -36,8 +39,8 @@ $(function() {
 			$('#ip-type').val(item.type);
 
 		} else if ($(this).hasClass('hard-disk-device')) {
-			let index = parseInt($('#data-hard-disk-device').attr('data-index'));
-			let item = hardDiskDevices[index];
+			index = parseInt($('#data-hard-disk-device').attr('data-index'));
+			item = hardDiskDevices[index];
 
 			$('#ip-replacement-cost').val(item.replacementCost);
 			$('#ip-supplier-name').val(item.supplierName);
@@ -51,8 +54,8 @@ $(function() {
 			$('#ip-number-of-platters').val(item.numberOfPlatters);
 			
 		} else if ($(this).hasClass('ssd-device')) {
-			let index = parseInt($('#data-ssd-device').attr('data-index'));
-			let item = ssdDevices[index];
+			index = parseInt($('#data-ssd-device').attr('data-index'));
+			item = ssdDevices[index];
 
 			$('#ip-replacement-cost').val(item.replacementCost);
 			$('#ip-supplier-name').val(item.supplierName);
@@ -67,6 +70,37 @@ $(function() {
 		}
 
 		blockUpdateButton();
+		e.preventDefault();
+	});
+
+	$('.btn-prev').on('click', function (e) {		
+		if ($(this).hasClass('video-device')) {
+			checkFirstItem ('video-device', videoDevices);			
+
+		} else if ($(this).hasClass('hard-disk-device')) {
+			checkFirstItem ('hard-disk-device', hardDiskDevices);
+			
+		} else if ($(this).hasClass('ssd-device')) {
+			checkFirstItem ('ssd-device', ssdDevices);
+		}
+
+		e.preventDefault();
+	});
+
+
+	$('.btn-next').on('click', function (e) {
+	
+		if ($(this).hasClass('video-device')) {
+			checkLastItem('video-device', videoDevices);			
+
+		} else if ($(this).hasClass('hard-disk-device')) {
+			checkLastItem('hard-disk-device', hardDiskDevices);
+			
+		} else if ($(this).hasClass('ssd-device')) {
+			checkLastItem('ssd-device', ssdDevices);
+
+		}
+
 		e.preventDefault();
 	});
 
@@ -300,5 +334,28 @@ function displayFields (button) {
 		$('div.ip-video-device, div.ip-hard-disk-device').addClass('hide-element');
 
 		$('#row-forms').attr('data-form-active', 'ssd-device');
+	}
+}
+
+
+function checkLastItem (device, arrayData) {
+	let index = parseInt($('#data-' + device).attr('data-index')) + 1;
+			
+	if (index < arrayData.length) {
+		item = arrayData[index];
+		updateValuesPanel(item, $('#prot-' + device), $('#data-' + device), arrayData.indexOf(item));
+	} else {
+		alert('You have reached the last item!');
+	}
+}
+
+function checkFirstItem (device, arrayData) {
+	let index = parseInt($('#data-' + device).attr('data-index')) - 1;
+			
+	if (index >= 0 && index < arrayData.length) {
+		let item = arrayData[index];
+		updateValuesPanel(item, $('#prot-' + device), $('#data-' + device), arrayData.indexOf(item));
+	} else {
+		alert('You have reached the first item!');
 	}
 }
