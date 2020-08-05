@@ -105,6 +105,20 @@ $(function() {
 	});
 
 
+	$('.btn-delete').on('click', function (e) {
+	
+		if ($(this).hasClass('video-device')) {
+			deleteItem('video-device', videoDevices);
+		} else if ($(this).hasClass('hard-disk-device')) {			
+			deleteItem('hard-disk-device', hardDiskDevices);
+		} else if ($(this).hasClass('ssd-device')) {
+			deleteItem('ssd-device', ssdDevices);
+		}
+
+		e.preventDefault();
+	});
+
+
 	// create new object form
 	$('#btn-create').on('click', (e) => {
 		let device = $('#row-forms').attr('data-form-active');
@@ -268,6 +282,11 @@ function setupData (dataArray, device) {
 // update objects in panel
 function updateValuesPanel (item, protype, destination, itemIndex) {
 	destination.empty();
+	
+	if(!item) {
+		return;
+	}
+
 	let elementBase = protype.html();
 	let objKeys = Object.keys(item);	
 	for (let i = 0; i < objKeys.length; i++) {
@@ -293,26 +312,26 @@ function updateValuesPanel (item, protype, destination, itemIndex) {
 // block update button if no objects to update
 function blockUpdateButton() {
 	if (videoDevices.length == 0) {
-		$('button.btn-update.video-device, button.btn-next.video-device, button.btn-prev.video-device')
+		$('button.btn-update.video-device, button.btn-next.video-device, button.btn-prev.video-device, button.btn-delete.video-device')
 			.attr('disabled', 'disabled');
 	} else {
-		$('button.btn-update.video-device, button.btn-next.video-device, button.btn-prev.video-device')
+		$('button.btn-update.video-device, button.btn-next.video-device, button.btn-prev.video-device, button.btn-delete.video-device')
 			.removeAttr('disabled');
 	}
 
 	if (hardDiskDevices.length == 0) {
-		$('button.btn-update.hard-disk-device, button.btn-next.hard-disk-device, button.btn-prev.hard-disk-device')
+		$('button.btn-update.hard-disk-device, button.btn-next.hard-disk-device, button.btn-prev.hard-disk-device, button.btn-delete.hard-disk-device')
 			.attr('disabled', 'disabled');
 	} else {
-		$('button.btn-update.hard-disk-device, button.btn-next.hard-disk-device, button.btn-prev.hard-disk-device')
+		$('button.btn-update.hard-disk-device, button.btn-next.hard-disk-device, button.btn-prev.hard-disk-device, button.btn-delete.hard-disk-device')
 			.removeAttr('disabled');
 	}
 
 	if (ssdDevices.length == 0) {
-		$('button.btn-update.ssd-device, button.btn-next.ssd-device, button.btn-prev.ssd-device')
+		$('button.btn-update.ssd-device, button.btn-next.ssd-device, button.btn-prev.ssd-device, button.btn-delete.ssd-device')
 			.attr('disabled', 'disabled');
 	} else {
-		$('button.btn-update.ssd-device, button.btn-next.ssd-device, button.btn-prev.ssd-device')
+		$('button.btn-update.ssd-device, button.btn-next.ssd-device, button.btn-prev.ssd-device, button.btn-delete.ssd-device')
 			.removeAttr('disabled');
 	}
 }
@@ -358,4 +377,14 @@ function checkFirstItem (device, arrayData) {
 	} else {
 		alert('You have reached the first item!');
 	}
+}
+
+
+
+function deleteItem (device, arrayData) {
+	let index = parseInt($('#data-' + device).attr('data-index'));
+	
+	arrayData.splice(index, 1);
+	updateValuesPanel(null, $('#prot-' + device), $('#data-' + device), {});
+	$('#btn-cancel').trigger('click');
 }
